@@ -44,7 +44,7 @@ module CableReady
             channel.send("on_#{class_name}_create", self, ar_object)
           end
         else
-          changed_attributes.each do |attribute|
+          ar_changed_attributes.each do |attribute|
             if channel.respond_to?("on_#{attribute}_changed")
               channel.send("on_#{attribute}_changed", self, ar_object)
             elsif channel.respond_to?("on_#{class_name}_#{attribute}_changed")
