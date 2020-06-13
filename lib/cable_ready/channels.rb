@@ -57,8 +57,8 @@ module CableReady
       string_identifiers = identifiers.map { |identifier| identifier.is_a?(String) }
       class_identifiers = identifiers.map { |identifier| !identifier.is_a?(String) }
 
-      broadcast(*string_identifiers, clear: false)
       broadcast_to(ar_object, *class_identifiers)
+      # broadcast(*string_identifiers, clear: false)
     end
   end
 end
