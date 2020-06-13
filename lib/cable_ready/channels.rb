@@ -59,12 +59,12 @@ module CableReady
 
       puts self
 
-      string_identifiers = identifiers.map { |identifier| identifier.is_a?(String) }
+      string_identifiers = identifiers.select { |identifier| identifier.is_a?(String) }
 
       puts "Strings"
       puts string_identifiers
 
-      class_identifiers = identifiers.map { |identifier| !identifier.is_a?(String) }
+      class_identifiers = identifiers.select { |identifier| !identifier.is_a?(String) }
 
       puts "Classes"
       puts class_identifiers
