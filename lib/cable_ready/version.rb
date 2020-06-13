@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module CableReady
-  VERSION = "4.2.1b"
+  VERSION = "4.2.1c"
 end
