@@ -35,6 +35,7 @@ module CableReady
     def broadcast_to_hooks(ar_object, *identifiers)
       ar_class_name = ar_object.class.name.underscore
       ar_changed_attributes = ar_object.saved_changes.keys
+
       identifiers.each do |channel|
         if (ar_object.created_at == ar_object.updated_at)
           if channel.respond_to?("on_create")
@@ -52,6 +53,12 @@ module CableReady
           end
         end
       end
+
+      string_identifiers = identifiers.map { |identifier| identifier.is_a?(String) }
+      class_identifiers = identifiers.map { |identifier| !identifier.is_a?(String) }
+
+      broadcast(*string_identifiers)
+      broadcast_to(ar_object, *class_identifiers)
     end
   end
 end
