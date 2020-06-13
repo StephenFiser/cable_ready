@@ -38,9 +38,9 @@ module CableReady
 
       identifiers.each do |channel|
         if just_created?(ar_object)
-          register_create_hooks(channel, ar_hooks)
+          register_create_hooks(channel, ar_object)
         else
-          register_update_hooks(channel, ar_hooks)
+          register_update_hooks(channel, ar_object)
         end
       end
 
