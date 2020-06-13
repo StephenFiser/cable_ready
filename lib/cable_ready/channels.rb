@@ -31,5 +31,27 @@ module CableReady
           channels.each { |channel| @channels.except!(channel.identifier) if clear }
         end
     end
+
+    def broadcast_to_hooks(ar_object, *identifiers)
+      ar_class_name = ar_object.class.name.underscore
+      ar_changed_attributes = ar_object.saved_changes.keys
+      identifiers.each do |channel|
+        if (ar_object.created_at == ar_object.updated_at)
+          if channel.respond_to?("on_create")
+            channel.send("on_create", ar_object)
+          elsif channel.respond_to?("on_#{class_name}_create")
+            channel.send("on_#{class_name}_create", ar_object)
+          end
+        else
+          changed_attributes.each do |attribute|
+            if channel.respond_to?("on_#{attribute}_changed")
+              channel.send("on_#{attribute}_changed", ar_object)
+            elsif channel.respond_to?("on_#{class_name}_#{attribute}_changed")
+              channel.send("on_#{class_name}_#{attribute}_changed", ar_object)
+            end
+          end
+        end
+      end
+    end
   end
 end
