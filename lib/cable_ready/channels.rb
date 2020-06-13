@@ -23,6 +23,9 @@ module CableReady
     end
 
     def broadcast_to(model, *identifiers, clear: true)
+      puts "From broadcast_to"
+      puts model
+      puts identifiers
       @channels.values
         .reject { |channel| identifiers.any? && identifiers.exclude?(channel.identifier) }
         .reject { |channel| channel.identifier.is_a?(String) }
@@ -54,8 +57,17 @@ module CableReady
         end
       end
 
+      puts self
+
       string_identifiers = identifiers.map { |identifier| identifier.is_a?(String) }
+
+      puts "Strings"
+      puts string_identifiers
+
       class_identifiers = identifiers.map { |identifier| !identifier.is_a?(String) }
+
+      puts "Classes"
+      puts class_identifiers
 
       broadcast_to(ar_object, *class_identifiers)
       # broadcast(*string_identifiers, clear: false)
